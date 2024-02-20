@@ -1,9 +1,11 @@
-# FitBi-Data-Exploration
-## Case study: Study trends in an already exisitng and successful fitness data collection device, then develope marketing recommendations on how to improve your own fitness and health tracker device for better customer experience and company profits.
-### Data source:
-[FitBit Fitness Data From Kaggle](https://www.kaggle.com/datasets/arashnic/fitbit)
+# FitBit-Data-Exploration
 
-### Pre-analysis 
+## Case study: Study trends in an existing fitness/health data collection device, then develope marketing recommendations for a new fitness tracker company to improve customer experience and unlock growth opportunities.
+
+#### Data source:
+[FitBit Tracker Data From Kaggle](https://www.kaggle.com/datasets/arashnic/fitbit)
+
+#### Pre-analysis 
 1. Reviewed all files for relevance and completeness to determine which files I wanted to use for my analysis
 2. Cleaned data in Excel after converting CSV files into XLSX files to prevent data loss
 3.   Sort and filter
