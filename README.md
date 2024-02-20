@@ -1,4 +1,16 @@
 # FitBi-Data-Exploration
-'''
-1. Reviewed each file for completeness and relevance, then uploaded the files I need for analysis to SQL
-2. File named "hourly_intensities" gave BigQuery an error because of invalid timestamp, so I manually uploaded that column to be a string.
+## Case study: Study trends in an already exisitng and successful fitness data collection device, then develope marketing recommendations on how to improve your own fitness and health tracker device for better customer experience and company profits.
+### Data source:
+[FitBit Fitness Data From Kaggle](https://www.kaggle.com/datasets/arashnic/fitbit)
+
+### Pre-analysis 
+1. Reviewed all files for relevance and completeness to determine which files I wanted to use for my analysis
+2. Cleaned data in Excel after converting CSV files into XLSX files to prevent data loss
+3.   Sort and filter
+4.   check for missing and blank values
+5. Excel Cleaning process results
+6.   Some users only have a couple dates of data logged, got rid of any users that had less than 20 days of data
+7. Observations after cleaning
+8.   There are 33 users instead of the 30 users that the dataset had in its description
+9.   Old dataset from 2016, outdated, not for current use but historica data reference only
+10.   Biased data, no information on demographic, gender, age, not sure if the population is represented or not
