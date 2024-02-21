@@ -5,7 +5,7 @@
 This data analysis project aims to study trends in an existing fitness/health data collection device called FitBit. Then develope marketing recommendations for a new fitness tracker company to improve customer experience and unlock growth opportunities with their product.
 
 ### Data Source:
-- [Download FitBit Tracker Data From Kaggle!](https://www.kaggle.com/datasets/arashnic/fitbit)
+- [Download FitBit Tracker Data From Kaggle!](https://www.kaggle.com/datasets/arashnic/fitbit) 🏃‍♂️
 - [FitBit Data Dictionary](https://www.fitabase.com/media/1930/fitabasedatadictionary102320.pdf)
 
 #### Users daily activity data: 
@@ -31,14 +31,16 @@ This data analysis project aims to study trends in an existing fitness/health da
 3. Validated data values, type, and format consistency
 4. Seperated date and time
 
-### Exploratory Questions
+### Exploratory Questions 
 1. Do users that have a more active day tend to take shorter time to fall asleep than users with a less active day?
 2. Is there a correlation of how many times users sleep every day and activity levels?
 3. What percentage of users are getting 7 hours or 8 hours of sleep every night?
 4. How positivie is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?
 5. What percentage of users meet CDC's recommended daily steps?
 ### Data Cleaning and Analysis in SQL
+```
 
+```
 
 
 
