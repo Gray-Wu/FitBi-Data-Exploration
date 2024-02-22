@@ -38,10 +38,24 @@ This data analysis project aims to study trends in an existing fitness/health da
 4. How positivie is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?
 5. What percentage of users meet CDC's recommended daily steps?
 ### Data Cleaning and Analysis in SQL
+
+Because the data set "dailyActivity" has every column that "dailyCalories", "dailySteps", and "dailyIntensities" have. I did three seperate ```JOIN``` queries to validate and match the data inside "dailyActivity" by Id and date.
+```sql
+SELECT --Selecting the calories column from both datasets and Id column from 'activity'--
+  activity.Id,
+  activity.Calories,
+  calories.Calories
+FROM
+  `fitbit-data-exploration.FitBit_Tracker.daily activity` as activity
+INNER JOIN
+  `fitbit-data-exploration.FitBit_Tracker.daily calories` as calories
+ON calories.Id = activity.Id
+AND activity.ActivityDate = calories.ActivityDay --Match the date the calories value correspond to--
 ```
 
 ```
 
+```
 
 
 #### Limitations:
