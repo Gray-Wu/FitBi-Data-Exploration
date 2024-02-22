@@ -9,7 +9,7 @@ This data analysis project aims to study trends in an existing fitness/health da
 - [FitBit Data Dictionary](https://www.fitabase.com/media/1930/fitabasedatadictionary102320.pdf)
 
 #### Users daily activity data: 
-"dailyActivity_merged.csv"   
+["dailyActivity_merged.csv"](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/FitBit_Raw/dailyActivity_merged.csv)   
 "dailyCalories_merged.csv"   
 "dailyintensities_merged.csv"   
 "dailySteps_merged.csv"   
