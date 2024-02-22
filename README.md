@@ -40,6 +40,7 @@ This data analysis project aims to study trends in an existing fitness/health da
 ### 🧹 Data Cleaning and Analysis in SQL
 
 The data set "dailyActivity" has the same identical columns that "dailyCalories", "dailySteps", and "dailyIntensities" have except for one column named "SedentaryActiveDistance" inside "dailyintensities". I performed three **```JOIN```** Clauses to validate and match the data inside "dailyActivity" by Id and date with the other data sets.
+
 ```sql
 CREATE TABLE `fitbit-data-exploration.FitBit_Tracker.daily activity full` as -- take result from JOIN and save as a new table --
 SELECT -- want the results to contain these columns --
