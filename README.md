@@ -32,16 +32,51 @@ This data analysis project aims to study trends in an existing fitness/health da
 4. Seperated date and time
 
 ### Exploratory Questions 
-1. Do users that have a more active day tend to take shorter time to fall asleep than users with a less active day?
+1. Do users that have a more active day stay in bed longer than users with a less active day? What about users with more active distance?
 2. Is there a correlation of how many times users sleep every day and activity levels?
 3. What percentage of users are getting 7 hours or 8 hours of sleep every night?
-4. How positivie is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?
+4. How positive is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?
 5. What percentage of users meet CDC's recommended daily steps?
 ### 🧹 Data Cleaning and Analysis in SQL
 
-The data set "dailyActivity" has the same identical columns that "dailyCalories", "dailySteps", and "dailyIntensities" have except for one column named "SedentaryActiveDistance" inside "dailyintensities". I performed three ```JOIN``` Clauses to validate and match the data inside "dailyActivity" by Id and date with the other data sets.
+The data set "dailyActivity" has the same identical columns that "dailyCalories", "dailySteps", and "dailyIntensities" have except for one column named "SedentaryActiveDistance" inside "dailyintensities". I performed three **```JOIN```** Clauses to validate and match the data inside "dailyActivity" by Id and date with the other data sets.
 ```sql
-
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker.daily activity full` as -- take result from JOIN and save as a new table --
+SELECT -- want the results to contain these columns --
+  activity.Id,
+  activity.ActivityDate,
+  steps.StepTotal,
+  calories.Calories,
+  activity.VeryActiveDistance,
+  activity.ModeratelyActiveDistance,
+  activity.LightActiveDistance LightlyActiveDistance, -- for consistent column naming --
+  intensities.SedentaryActiveDistance,
+  activity.VeryActiveMinutes,
+  activity.FairlyActiveMinutes,
+  activity.LightlyActiveMinutes,
+  activity.SedentaryMinutes
+FROM
+  `fitbit-data-exploration.FitBit_Tracker.daily activity` AS activity -- daily acitity data set as activity --
+JOIN
+  `fitbit-data-exploration.FitBit_Tracker.daily intensities` AS intensities -- daily intensities data set as intensities --
+ON
+  activity.Id = intensities.Id
+AND
+  activity.ActivityDate = Intensities.ActivityDay
+JOIN
+  `fitbit-data-exploration.FitBit_Tracker.daily steps` AS steps -- daily steps data set as steps --
+ON
+  activity.Id = steps.Id
+AND
+  activity.ActivityDate = steps.ActivityDay
+JOIN
+  `fitbit-data-exploration.FitBit_Tracker.daily calories` AS calories -- daily calories data set as calories --
+ON
+  activity.Id = calories.Id 
+AND
+  activity.ActivityDate = calories.ActivityDay;
+/* All three AND clauses match the ActivityDate column to the other tables' date columns.
+All three ON clauses match the Id column to the other tables' Id columns. */
 ```
 
 #### Limitations:
