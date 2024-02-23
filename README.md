@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This data analysis project aims to study trends in an existing fitness/health data collection device called FitBit. Then develope marketing recommendations for a new fitness tracker company to improve customer experience and unlock growth opportunities with their product.
+This data analysis project aims to study user trends from an existing fitness/health data collection device called FitBit. Then develope marketing recommendations for a new fitness tracker company to improve customer experience and unlock growth opportunities with their product.
 
 ### 📊 Data Source:
 - [Download FitBit Tracker Data From Kaggle!](https://www.kaggle.com/datasets/arashnic/fitbit) 
@@ -32,11 +32,12 @@ This data analysis project aims to study trends in an existing fitness/health da
 4. Seperated date and time
 
 ### Exploratory Questions 
-1. Do users that have a more active day sleep longer than users with a less active day? What about users with more active distance? [#1](#Question-1)
-2. Is there a correlation of how many times users sleep every day and activity levels?
-3. What percentage of users are getting 7 hours or 8 hours of sleep every night?
-4. How positive is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?
-5. What percentage of users meet CDC's recommended daily steps?
+[**Q1**](#Question-1) Do users that have a more active day sleep longer than users with a less active day? What about users with more active distance?     
+[**Q2**](#Question-2) Is there a correlation of how many times users sleep every day and activity levels?      
+[**Q3**](#Question-3) What percentage of users are getting 7 hours or 8 hours of sleep every night?    
+[**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?    
+[**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?    
+[**Q6**](#Question-6) How many minutes are each user usually active every day?   
 ### 🧹 Data Cleaning and Analysis in SQL
 
 The data set "dailyActivity" has the same identical columns that "dailyCalories", "dailySteps", and "dailyIntensities" have except for one column named "SedentaryActiveDistance" inside "dailyintensities". I performed three **```JOIN```** Clauses to validate and match the data inside "dailyActivity" by Id and date with the other data sets.
@@ -89,7 +90,29 @@ create table `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` as SELECT *
 EXCEPT (`string_field_5`,`string_field_6`,`string_field_7`,`string_field_8`,`string_field_9`)
 FROM `fitbit-data-exploration.FitBit_Tracker.daily sleep`
 ```
-#### Question 1
+
+Now all the data is ready to tackle the exploratory questions 🔽     
+
+#### Question 1   
+
+Using **```COUNT```** and **```DISTINCT```** I found that only 23 of the 30 users had sleep data.
+
+Applying the following query I found the average time each user slept every day, excluding any users that had less than (a number) days of sleep data. This was lenient as the sample size data was already small.   
+
+```
+
+```
+
+#### Question 2
+
+#### Question 3   
+
+#### Question 4   
+
+#### Question 5    
+
+#### Question 6    
+
 
 ### Limitations:
 
