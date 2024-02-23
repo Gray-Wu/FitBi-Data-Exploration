@@ -32,7 +32,7 @@ This data analysis project aims to study trends in an existing fitness/health da
 4. Seperated date and time
 
 ### Exploratory Questions 
-1. Do users that have a more active day stay in bed longer than users with a less active day? What about users with more active distance?
+1. Do users that have a more active day sleep longer than users with a less active day? What about users with more active distance? [#1](#Question-1)
 2. Is there a correlation of how many times users sleep every day and activity levels?
 3. What percentage of users are getting 7 hours or 8 hours of sleep every night?
 4. How positive is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?
@@ -80,7 +80,18 @@ AND
 All three ON clauses match the Id column to the other tables' Id columns. */
 ```
 
-#### Limitations:
+Now there's a full data set with users' daily calories, steps, intensity minutes and distance all in one data set. Using that, the sleep data, and the two hourly data sets, the trends can be explored more easily.    
+
+Sleep data had 5 empty string columns, created a new table called 'sleep data 1' with the same data but excluding those empty columns.
+
+```sql
+create table `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` as SELECT *
+EXCEPT (`string_field_5`,`string_field_6`,`string_field_7`,`string_field_8`,`string_field_9`)
+FROM `fitbit-data-exploration.FitBit_Tracker.daily sleep`
+```
+#### Question 1
+
+### Limitations:
 
 -  There are 33 users instead of the 30 users mentioned in the description of this dataset, loses some point on data integrity
 -  Potentially biased data, no information on demographic, gender, age, not sure if the population is fairly represented or not as the sample size is small.
