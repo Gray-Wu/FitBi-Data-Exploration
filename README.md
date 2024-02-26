@@ -147,6 +147,7 @@ Using Tableau this simple graph was created
 ![Q1 tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/User%20Time%20Slept%20Vs%20User%20Active%20Minutes.png)
 
 #### Question 2
+---
 
 I started with getting rid of users that had less than 15 rows of sleep data
 ```sql
@@ -164,6 +165,8 @@ WHERE
 ```
 
 #### Question 3   
+---
+Active Rate in this case is how far each user travelled per minute of activity.
 
 ```sql
 SELECT
@@ -174,14 +177,17 @@ FROM
   `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all`
 ```
 
-Active Rate in this case is how far each user travelled per minute of activity. This table was plugged into tableau for this graph
+![Q3 Tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Avg_Active_Rate_vs_Avg_Cal_burnt%20Q3.png)
 
 
 #### Question 4   
+---
 
 #### Question 5    
+---
 
 #### Question 6    
+---
 
 
 ### Limitations:
