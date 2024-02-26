@@ -1,6 +1,6 @@
-# [&#x200B;](#) FitBit-Data-Exploration
+<h1 clickable="false"> FitBit-Data-Exploration
 
-## [&#x200B;](#) Project Overview
+## Project Overview
 
 This data analysis project aims to study user trends from an existing fitness/health data collection device called FitBit. Then develope marketing recommendations for a new fitness tracker company to improve customer experience and unlock growth opportunities with their product.
 
