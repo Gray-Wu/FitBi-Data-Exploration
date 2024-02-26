@@ -1,4 +1,4 @@
-<h1 clickable="false"> FitBit-Data-Exploration
+# FitBit-Data-Exploration
 
 ## Project Overview
 
