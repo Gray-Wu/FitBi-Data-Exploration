@@ -32,7 +32,7 @@ This data analysis project aims to study user trends from an existing fitness/he
 4. Seperated date and time
 
 ### Exploratory Questions 
-[**Q1**](#Question-1) Do users with more active minutes sleep longer than users with less active minutes? What about users with more active distance?   
+[**Q1**](#Question-1) Do users with more active minutes sleep longer than users with less active minutes?
 [**Q2**](#Question-2) What percentage of users are getting 7 hours or 8 hours of sleep every night?       
 [**Q3**](#Question-3) Do uses with a higher active rate (distance traveled per minute) tend to have more steps?      
 [**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?    
@@ -142,6 +142,7 @@ FROM( -- subquery users' average sleep time if they have more than or equal to 1
 LEFT JOIN `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all` avg_all
 ON avg_sleep.Id = avg_all.Id
 ```
+Using Tableau The simple graph was created
 
 
 
