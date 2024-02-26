@@ -32,9 +32,9 @@ This data analysis project aims to study user trends from an existing fitness/he
 4. Seperated date and time
 
 ### Exploratory Questions 
-[**Q1**](#Question-1) Do users that have a more active day sleep longer than users with a less active day? What about users with more active distance?     
-[**Q2**](#Question-2) Is there a correlation of how many times users sleep every day and activity levels?      
-[**Q3**](#Question-3) What percentage of users are getting 7 hours or 8 hours of sleep every night?    
+[**Q1**](#Question-1) Do users with more active minutes sleep longer than users with less active minutes? What about users with more active distance?   
+[**Q2**](#Question-2) What percentage of users are getting 7 hours or 8 hours of sleep every night?       
+[**Q3**](#Question-3) Do uses with a higher active rate (distance traveled per minute) tend to have more steps?      
 [**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?    
 [**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?    
 [**Q6**](#Question-6) How many minutes are each user usually active every day?   
@@ -80,8 +80,29 @@ AND
 /* All three AND clauses match the ActivityDate column to the other tables' date columns.
 All three ON clauses match the Id column to the other tables' Id columns. */
 ```
+Calculate total data from users' daily data and then find averages.
+```sql
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all` AS
+SELECT -- average each total data column by user Id
+  Id,
+  AVG(StepTotal) AvgSteps,
+  AVG(Calories) AvgCalories,
+  AVG(TotalActiveDistance) AvgDistance,
+  AVG(TotalActiveMinutes) AvgActiveMinutes,
+  AVG(SedentaryMinutes) AvgSedentaryMinutes
+FROM(
+  SELECT 
+    Id,
+    StepTotal,
+    Calories,
+    VeryActiveDistance + ModeratelyActiveDistance + LightlyActiveDistance TotalActiveDistance, -- save total active distance in new column
+    VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes TotalActiveMinutes, -- save total active minutes in new column
+    SedentaryMinutes
+  FROM `fitbit-data-exploration.FitBit_Tracker.daily activity full`)
+GROUP BY Id
+```
 
-Now there's a full data set with users' daily calories, steps, intensity minutes and distance all in one data set. Using that, the sleep data, and the two hourly data sets, the trends can be explored more easily.    
+Now there's a full data set with users' average calories, steps, active minutes and distance all in one data set. Using that, the sleep data, and the two hourly data sets, the trends can be explored more easily.    
 
 Sleep data had 5 empty string columns, created a new table called 'sleep data 1' with the same data but excluding those empty columns.
 
@@ -93,15 +114,36 @@ FROM `fitbit-data-exploration.FitBit_Tracker.daily sleep`
 
 Now all the data is ready to tackle the exploratory questions 🔽     
 
-#### Question 1   
+#### Question 1 
+---
 
-Using **```COUNT```** and **```DISTINCT```** I found that only 23 of the 30 users had sleep data.
+Using **```COUNT```** and **```DISTINCT```** I found that only 23 of the 33 users had sleep data.
 
-Applying the following query I found the average time each user slept every day, excluding any users that had less than (a number) days of sleep data. This was lenient as the sample size data was already small.   
+I used **```LEFT JOIN```** with the average data table after useing a subquery to get users with more than or equal to 15 days of sleep data.
+*I chose 15 days to be linient with the sample filtering because the sample size was already small*
 
+```sql
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_Q1` AS
+SELECT
+  avg_sleep.Id,
+  avg_sleep.avg_sleeptime,
+  avg_sleep.avg_timeinbed,
+  avg_all.AvgDistance,
+  avg_all.AvgActiveMinutes,
+  avg_all.AvgSedentaryMinutes
+FROM( -- subquery users' average sleep time if they have more than or equal to 15 days of sleep data
+  SELECT Id, 
+    AVG(TotalMinutesAsleep) avg_sleeptime, 
+    AVG(TotalTimeInBed) avg_timeinbed,
+    COUNT(1) days
+  FROM `fitbit-data-exploration.FitBit_Tracker.daily sleep 1`
+  GROUP BY Id
+  HAVING COUNT(*) >= 15) avg_sleep -- saving table temporarily as avg_sleep
+LEFT JOIN `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all` avg_all
+ON avg_sleep.Id = avg_all.Id
 ```
 
-```
+
 
 #### Question 2
 
