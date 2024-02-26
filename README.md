@@ -32,9 +32,9 @@ This data analysis project aims to study user trends from an existing fitness/he
 4. Seperated date and time
 
 ### Exploratory Questions 
-[**Q1**](#Question-1) Do users with more active minutes sleep longer than users with less active minutes?
+[**Q1**](#Question-1) Do users with more active minutes sleep longer than users with less active minutes?      
 [**Q2**](#Question-2) What percentage of users are getting 7 hours or 8 hours of sleep every night?       
-[**Q3**](#Question-3) Do uses with a higher active rate (distance traveled per minute) tend to have more steps?      
+[**Q3**](#Question-3) Do users with a higher active rate (distance traveled per minute) tend to burn more calories?      
 [**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?    
 [**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?    
 [**Q6**](#Question-6) How many minutes are each user usually active every day?   
@@ -142,13 +142,40 @@ FROM( -- subquery users' average sleep time if they have more than or equal to 1
 LEFT JOIN `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all` avg_all
 ON avg_sleep.Id = avg_all.Id
 ```
-Using Tableau The simple graph was created
+Using Tableau this simple graph was created
 
-
+![Q1 tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/User%20Time%20Slept%20Vs%20User%20Active%20Minutes.png)
 
 #### Question 2
 
+I started with getting rid of users that had less than 15 rows of sleep data
+```sql
+SELECT
+  Id,
+  SleepDay,
+  TotalMinutesAsleep,
+  TotalMinutesAsleep/60 AS SleepHrs
+FROM
+  `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` a
+WHERE 
+  (SELECT count(*) 
+  FROM `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` b
+  WHERE b.id=a.id) >= 15
+```
+
 #### Question 3   
+
+```sql
+SELECT
+  Id,
+  AvgCalories,
+  AvgDistance/AvgActiveMinutes AS ActiveRate
+FROM
+  `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all`
+```
+
+Active Rate in this case is how far each user travelled per minute of activity. This table was plugged into tableau for this graph
+
 
 #### Question 4   
 
