@@ -33,7 +33,7 @@ This data analysis project aims to study user trends from an existing fitness/he
 
 ### Exploratory Questions 
 [**Q1**](#Question-1) Do users with more active minutes sleep longer than users with less active minutes?      
-[**Q2**](#Question-2) What percentage of users are getting 7 hours or 8 hours of sleep every night?       
+[**Q2**](#Question-2) What is the percentage of days where each user is getting at least 7 hours of sleep?    
 [**Q3**](#Question-3) Do users with a higher active rate (distance traveled per minute) tend to burn more calories?      
 [**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?    
 [**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?    
@@ -149,20 +149,48 @@ Using Tableau this simple graph was created
 #### Question 2
 ---
 
-I started with getting rid of users that had less than 15 rows of sleep data
+I started with queries to calculate the percentage of days where each user slept more than 7 hours, then subqueried users with at least 15 days of sleep data for the percentage calculation.
+Then I put each user into percentage groups of how many days slept more than 7 hours
 ```sql
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.Sleep7` AS
 SELECT
   Id,
-  SleepDay,
-  TotalMinutesAsleep,
-  TotalMinutesAsleep/60 AS SleepHrs
-FROM
-  `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` a
-WHERE 
-  (SELECT count(*) 
-  FROM `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` b
-  WHERE b.id=a.id) >= 15
+  Percentage,
+CASE -- group into percentage categories
+  WHEN Percentage BETWEEN 0 AND 30 THEN '0%-30%'
+  WHEN Percentage BETWEEN 31 AND 50 THEN '31%-50%'
+  WHEN Percentage BETWEEN 51 AND 70 THEN '51%-70%'
+  WHEN Percentage BETWEEN 71 AND 90 THEN '71%-90%'
+  WHEN Percentage > 91 THEN '>91%'
+  END AS grouped -- column name is grouped
+FROM(
+  SELECT
+    Id,
+    (Sleep7 *100)/alldays * 1.0 AS Percentage -- calculate percentage for each user
+  FROM(
+    SELECT
+      Id,
+      count(CASE WHEN SleepHrs >= 7 THEN 1 END) AS Sleep7, -- count when sleeptime is >= 7 hours
+      count(*) AS alldays
+      FROM(
+        SELECT
+          Id,
+          SleepDay,
+          TotalMinutesAsleep,
+          TotalMinutesAsleep/60 AS SleepHrs -- sleep time in hours
+        FROM
+          `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` a
+        WHERE(
+            SELECT count(*) -- exclude users with less than 15 days of data
+            FROM `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` b
+            WHERE b.id=a.id) >= 15
+      )
+  GROUP BY Id)
+derived)
+
+    
 ```
+Through this I found that 2 users slept less than 7 hours 
 
 #### Question 3   
 ---
