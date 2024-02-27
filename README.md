@@ -98,7 +98,8 @@ FROM(
     VeryActiveDistance + ModeratelyActiveDistance + LightlyActiveDistance TotalActiveDistance, -- save total active distance in new column
     VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes TotalActiveMinutes, -- save total active minutes in new column
     SedentaryMinutes
-  FROM `fitbit-data-exploration.FitBit_Tracker.daily activity full`)
+  FROM `fitbit-data-exploration.FitBit_Tracker.daily activity full`
+  WHERE Calories != 0) -- Get rid of zero rows
 GROUP BY Id
 ```
 
@@ -111,6 +112,8 @@ create table `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` as SELECT *
 EXCEPT (`string_field_5`,`string_field_6`,`string_field_7`,`string_field_8`,`string_field_9`)
 FROM `fitbit-data-exploration.FitBit_Tracker.daily sleep`
 ```
+**Note:** 4 values in the calories column are zeros, upon further inspection, other data columns in the same row have non-zero values including steps taken, active and non-active minutes. This confirms that
+those 4 zero values were on the same days where the bracelet had picked up other data. So they will be kept in analysis as it can paint a picture of some limitations of the bracelet's data collection capabiliities.
 
 Now all the data is ready to tackle the exploratory questions 🔽     
 
@@ -207,10 +210,30 @@ FROM
   `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all`
 ```
 
-![Q3 pt.1 Tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Avg_Active_Rate_vs_Avg_Cal_burnt%20Q3.png)
+![Q3 pt.1 Tableau graph]
 
-Using 'hourlyIntensities',
+Using 'hourly intensities', I excluded users with less than 500 rows of hourly data, calculated the hourly average intensity rate for each user, then used **```LEFT JOIN```**
+to put it in a table with the same users' average calories burnt
 
+```sql
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_hour_int` AS
+SELECT 
+  avg_Hrint.Id,
+  avg_Hrint.AverageIntensity AS AverageHourlyIntensity,
+  avg_all.AvgCalories
+FROM(
+  SELECT
+    Id,
+    AVG(AverageIntensity) AS AverageIntensity,
+    COUNT(1) ActivityHour
+  FROM
+    `fitbit-data-exploration.FitBit_Tracker.hourly intensities` 
+  GROUP BY Id
+  HAVING COUNT(*) >= 500 -- include users with 500 hours/rows of data
+) avg_Hrint
+LEFT JOIN `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all` avg_all
+ON avg_Hrint.Id = avg_all.Id
+```
 
 #### Question 4   
 ---
