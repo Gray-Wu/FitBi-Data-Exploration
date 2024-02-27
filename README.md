@@ -210,7 +210,7 @@ FROM
   `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all`
 ```
 
-![Q3 pt.1 Tableau graph]
+![Q3 pt.1 Tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.1_ActDistRate_Vs_Calories.png)
 
 Using 'hourly intensities', I excluded users with less than 500 rows of hourly data, calculated the hourly average intensity rate for each user, then used **```LEFT JOIN```**
 to put it in a table with the same users' average calories burnt
