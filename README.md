@@ -190,7 +190,9 @@ derived)
 
     
 ```
-Through this I found that 2 users slept less than 7 hours 
+After inputing the query table into tableau 🔽      
+
+![Q2 tableau pie chart](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q2%20Users'%20Percentage%20of%20Days%20Slept%20Over%207%20Hrs.png)
 
 #### Question 3   
 ---
