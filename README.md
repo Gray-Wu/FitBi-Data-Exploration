@@ -17,7 +17,8 @@ This data analysis project aims to study user trends from an existing fitness/he
 
 #### 🏃 Users hourly activity data used
 [hourlySteps_merged.csv](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/FitBit_Raw/hourlySteps_merged.csv)    
-[hourlyIntensities_merged.csv](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/FitBit_Raw/hourlyIntensities_merged.csv)    
+[hourlyIntensities_merged.csv](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/FitBit_Raw/hourlyIntensities_merged.csv)   
+[hourlyCalories_merged.csv](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/FitBit_Raw/hourlyCalories_merged.csv)
 
 ### 🔨 Tools Used
  - **Excel** for data inspection and validation
@@ -34,7 +35,7 @@ This data analysis project aims to study user trends from an existing fitness/he
 ### Exploratory Questions 
 [**Q1**](#Question-1) Do users with more active minutes sleep longer than users with less active minutes?      
 [**Q2**](#Question-2) What is the percentage of days where each user is getting at least 7 hours of sleep?    
-[**Q3**](#Question-3) Do users with a higher average hourly intensity rate tend to burn more calories?     
+[**Q3**](#Question-3) Do users with a higher average hourly intensity rate tend to burn more average calories per hour? *working on this one*     
 [**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?    
 [**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?    
 [**Q6**](#Question-6) How many minutes are each user usually active every day?   
