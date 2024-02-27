@@ -34,7 +34,7 @@ This data analysis project aims to study user trends from an existing fitness/he
 ### Exploratory Questions 
 [**Q1**](#Question-1) Do users with more active minutes sleep longer than users with less active minutes?      
 [**Q2**](#Question-2) What is the percentage of days where each user is getting at least 7 hours of sleep?    
-[**Q3**](#Question-3) Do users with a higher active rate (distance traveled per minute) tend to burn more calories?      
+[**Q3**](#Question-3) Do users with a higher average hourly intensity rate tend to burn more calories?     
 [**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?    
 [**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?    
 [**Q6**](#Question-6) How many minutes are each user usually active every day?   
@@ -196,7 +196,7 @@ After inputing the query table into tableau 🔽
 
 #### Question 3   
 ---
-Active Rate in this case is how far each user travelled per minute of activity.
+Before using hourly data, I quickly calculated each user's active distance rate and put charted it against average calories burnt for reference.
 
 ```sql
 SELECT
@@ -207,7 +207,9 @@ FROM
   `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all`
 ```
 
-![Q3 Tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Avg_Active_Rate_vs_Avg_Cal_burnt%20Q3.png)
+![Q3 pt.1 Tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Avg_Active_Rate_vs_Avg_Cal_burnt%20Q3.png)
+
+Using 'hourlyIntensities',
 
 
 #### Question 4   
