@@ -23,7 +23,7 @@ This data analysis project aims to study user trends from an existing fitness/he
 ### 🔨 Tools Used
  - **Excel** for data inspection and validation
  - **SQL** for data cleaning and analysis
- - **Tableau** for data visualization and creating reports
+ - **Tableau** for all data visualization and report creation
 
 ### Data Preparation/Cleaning Tasks Done in Excel
 
@@ -35,7 +35,7 @@ This data analysis project aims to study user trends from an existing fitness/he
 ### Exploratory Questions 
 [**Q1**](#Question-1) Do users with more active minutes sleep longer than users with less active minutes?      
 [**Q2**](#Question-2) What is the percentage of days where each user is getting at least 7 hours of sleep?    
-[**Q3**](#Question-3) Do users with a higher average hourly intensity rate tend to burn more average calories per hour? *working on this one*     
+[**Q3**](#Question-3) Do users with a higher average hourly intensity rate tend to burn more average calories per hour?    
 [**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about compared to distance walked and calories burnt?    
 [**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?    
 [**Q6**](#Question-6) How many minutes are each user usually active every day?   
@@ -213,28 +213,42 @@ FROM
 
 ![Q3 pt.1 Tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.1_ActDistRate_Vs_Calories.png)
 
-Using 'hourly intensities', I excluded users with less than 500 rows of hourly data, calculated the hourly average intensity rate for each user, then used **```LEFT JOIN```**
-to put it in a table with the same users' average calories burnt
+I excluded users with less than 500 rows of hourly data in 'hourly calories' with **```QUALIFY COUNT(*) over (PARTITION by)```**. There are 720 hours in 30 days, I wanted to
+keep users with a adequate amount of hourly data for analysis.     
+I then **```LEFT JOIN```** with 'hourly intensities' by Id, date, and hour so both calories burnt and intensity are from the same user, date, and hour.    
+Lastly, I found the average of each users' hourly calories burnt and intensity
 
 ```sql
-CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_hour_int` AS
-SELECT 
-  avg_Hrint.Id,
-  avg_Hrint.AverageIntensity AS AverageHourlyIntensity,
-  avg_all.AvgCalories
-FROM(
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_hourly_int_cal` AS
+SELECT
+  Id,
+  AVG(Calories) Avg_HourlyCal, -- find the average hourly data from joined table
+  AVG(AverageIntensity) Avg_HourlyInt
+FROM( -- FROM the joined table
   SELECT
-    Id,
-    AVG(AverageIntensity) AS AverageIntensity,
-    COUNT(1) ActivityHour
-  FROM
-    `fitbit-data-exploration.FitBit_Tracker.hourly intensities` 
-  GROUP BY Id
-  HAVING COUNT(*) >= 500 -- include users with 500 hours/rows of data
-) avg_Hrint
-LEFT JOIN `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all` avg_all
-ON avg_Hrint.Id = avg_all.Id
+    cal.Id,
+    cal.Date,
+    cal.Hour,
+    cal.Calories,
+    int.AverageIntensity
+  FROM( -- FROM a table with users with more than 500 rows of hourly data
+    SELECT *
+    FROM
+      `fitbit-data-exploration.FitBit_Tracker.hourly calories`
+      Qualify count(*) over (partition by Id) >=500
+  ) cal
+  LEFT JOIN `fitbit-data-exploration.FitBit_Tracker.hourly intensities` int ON
+    cal.Id = int.Id 
+  WHERE 
+    cal.Date = int.Date AND cal.Hour = int.ActivityHour 
+    /* join hourly calories and hourly intensities 
+    by Id, Date, and Hour */
+)
+GROUP BY Id
 ```
+4 users were excluded as they did not have ove 500 rows of hourly data.     
+
+The following was created using Tableau 🔽
 
 #### Question 4   
 ---
