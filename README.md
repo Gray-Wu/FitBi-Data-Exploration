@@ -323,7 +323,8 @@ ON
 WHERE
   dist.ActivityDate = step.ActivityDay AND dist.Calories = step.Calories;
 ```
-
+Tableau was used to create a visualization to put both tables in the same context🔽
+![Q4 Steps/Distance Vs Calories](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q4%20steps_distance_Vs_calories.png)
 #### [Question 5](#Exploratory-Questions)    
 ---
 
