@@ -256,6 +256,73 @@ The following was created using Tableau 🔽
 
 #### [Question 4](#Exploratory-Questions)   
 ---
+I started with **```JOIN```** by Id and date to combine daily steps taken and calories burnt for users that had more than 20 days of data.  
+
+```sql
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.daily_steps_cal` AS
+SELECT
+  steps.Id,
+  steps.ActivityDay,
+  steps.StepTotal,
+  cal.Calories
+FROM(-- FROM a table which exclude users with less than 20 days of data
+  SELECT
+    Id,
+    ActivityDay,
+    StepTotal
+  FROM
+    `fitbit-data-exploration.FitBit_Tracker.daily steps` 
+    QUALIFY COUNT(*) over (PARTITION BY Id) >= 20
+) steps 
+LEFT JOIN
+  `fitbit-data-exploration.FitBit_Tracker.daily calories` cal ON
+  steps.Id = cal.Id
+WHERE
+  steps.ActivityDay = cal.ActivityDay;
+```
+
+Then the same process but with total distance and calories burnt for users that had more than 20 days of data
+
+```sql
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.daily_dist_cal` AS
+SELECT
+  act.Id,
+  act.ActivityDate,
+  cal.Calories,
+  act.Tot_Distance
+FROM( -- FROM a table with users that have more than 20 days of data
+  SELECT
+    Id,
+    ActivityDate,
+    VeryActiveDistance + ModeratelyActiveDistance + 
+    LightlyActiveDistance + SedentaryActiveDistance AS Tot_Distance
+  FROM
+    `fitbit-data-exploration.FitBit_Tracker.daily activity full` 
+    QUALIFY COUNT(*) over (PARTITION BY Id)>=20
+) act
+LEFT JOIN `fitbit-data-exploration.FitBit_Tracker.daily calories` cal
+ON act.Id = cal.Id
+WHERE
+  act.ActivityDate = cal.ActivityDay;
+```
+Then I joined them together for easier access of visualization
+
+```sql
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.daily_cal_steps_dist` AS
+SELECT
+  dist.Id,
+  dist.ActivityDate,
+  dist.Calories,
+  dist.Tot_Distance,
+  step.StepTotal
+FROM `fitbit-data-exploration.FitBit_Tracker_Export_Tables.daily_dist_cal` dist
+LEFT JOIN 
+  `fitbit-data-exploration.FitBit_Tracker_Export_Tables.daily_steps_cal` step
+ON
+  dist.Id = step.Id
+WHERE
+  dist.ActivityDate = step.ActivityDay AND dist.Calories = step.Calories;
+```
 
 #### [Question 5](#Exploratory-Questions)    
 ---
