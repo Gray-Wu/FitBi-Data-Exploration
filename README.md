@@ -118,7 +118,7 @@ those 4 zero values were on the same days where the bracelet had picked up other
 
 Now all the data is ready to tackle the exploratory questions 🔽     
 
-#### Question 1 
+#### [Question 1](#Exploratory-Questions)
 ---
 
 Using **```COUNT```** and **```DISTINCT```** I found that only 23 of the 33 users had sleep data.
