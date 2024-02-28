@@ -250,6 +250,10 @@ GROUP BY Id
 
 The following was created using Tableau 🔽
 
+![Q3 pt.2 line graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.2%20line%20graph.png)
+
+![Q3 pt.2 trend scatter plot](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.2%20trend%20line%20scatter%20plot.png)
+
 #### Question 4   
 ---
 
