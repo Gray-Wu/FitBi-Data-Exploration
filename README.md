@@ -150,7 +150,7 @@ Using Tableau this simple graph was created
 
 ![Q1 tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/User%20Time%20Slept%20Vs%20User%20Active%20Minutes.png)
 
-#### Question 2
+#### [Question 2](Exploratory-Questions)
 ---
 
 I started with queries to calculate the percentage of days where each user slept more than 7 hours, then subqueried users with at least 15 days of sleep data for the percentage calculation.
@@ -198,7 +198,7 @@ After inputing the query table into tableau 🔽
 
 ![Q2 tableau pie chart](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q2%20Users'%20Percentage%20of%20Days%20Slept%20Over%207%20Hrs.png)
 
-#### Question 3   
+#### [Question 3](Exploratory-Questions)   
 ---
 Before using hourly data, I quickly calculated each user's active distance rate and put charted it against average calories burnt for reference.
 
@@ -254,13 +254,13 @@ The following was created using Tableau 🔽
 
 ![Q3 pt.2 trend scatter plot](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.2%20trend%20line%20scatter%20plot.png)
 
-#### Question 4   
+#### [Question 4](Exploratory-Questions)   
 ---
 
-#### Question 5    
+#### [Question 5](Exploratory-Questions)    
 ---
 
-#### Question 6    
+#### [Question 6](Exploratory-Questions)    
 ---
 
 
