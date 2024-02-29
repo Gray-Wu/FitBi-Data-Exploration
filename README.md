@@ -225,6 +225,11 @@ derived)
 After inputing the query table into tableau 🔽      
 
 ![Q2 tableau pie chart](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q2%20Users'%20Percentage%20of%20Days%20Slept%20Over%207%20Hrs.png)
+*(Figure 2) N=15, Pie chart of how many users slept above 7 hours a certain percentage of days; 2 users slept above 7 hours 0-30% of their days, 1 user slept above 7 hours 31-50% of their days,
+6 users slept above 7 hours 51-70% of their days, 5 users slept above 7 hours 71-90% of their days, and 1 user slept above 7 hours 91% of their days.*
+
+**Analysis**✏️ Small sample size due to a lot of missing days for users, however out of the 15 users, most users sleep above 7 hours more than half of their days during the month.
+Some selected days users slept up to 10 hours or down to 4 hours. The 7-hour categorization was chosen as it represents a fair cutoff for studying how many users get enough sleep and how often.
 
 #### [Question 3](#Exploratory-Questions)   
 ---
@@ -239,12 +244,14 @@ FROM
   `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all`
 ```
 
-![Q3 pt.1 Tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.1_ActDistRate_Vs_Calories.png)
+![Q3 pt.1 Tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.1_ActDistRate_Vs_Calories.png)        
+*(Figure 3a) Average active rate (distance/minutes) of each user represented in blue and average daily calories burnt of each user represented in orange.*          
 
-I excluded users with less than 500 rows of hourly data in 'hourly calories' with **```QUALIFY COUNT(*) over (PARTITION by)```**. There are 720 hours in 30 days, I wanted to
-keep users with a adequate amount of hourly data for analysis.     
-I then **```LEFT JOIN```** with 'hourly intensities' by Id, date, and hour so both calories burnt and intensity are from the same user, date, and hour.    
-Lastly, I found the average of each users' hourly calories burnt and intensity
+I excluded users with less than 500 rows of hourly data in 'hourly calories' with **```QUALIFY COUNT(*) over (PARTITION by)```**. There are 720 hours in 30 days,
+users with an adaquate amount of hourly data were kept to calculate averages.     
+
+**```LEFT JOIN```** was then used with 'hourly intensities' by Id, date, and hour so both calories burnt and intensity are from the same user, date, and hour.
+Lastly, the average of each users' hourly calories burnt and intensity were calculated.
 
 ```sql
 CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_hourly_int_cal` AS
@@ -278,9 +285,13 @@ GROUP BY Id
 
 The following was created using Tableau 🔽
 
-![Q3 pt.2 line graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.2%20line%20graph.png)
+![Q3 pt.2 trend scatter plot](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.2%20trend%20line%20scatter%20plot.png)     
+*(Figure 3b) Average hourly intensity against average hourly calories burnt colored by user Id with polynomial trend line.*
 
-![Q3 pt.2 trend scatter plot](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.2%20trend%20line%20scatter%20plot.png)
+![Q3 pt.2 line graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.2%20line%20graph.png)    
+*(Figure 3c) Line graph of average hourly intensity in orange and average hourly calories burnt in blue.*
+
+**Analysis**✏️ 
 
 #### [Question 4](#Exploratory-Questions)   
 ---
