@@ -1,8 +1,8 @@
-# FitBit-Data-Exploration
+# CASE STUDY: FITBIT TRACKER DATA EXPLORATION
 
 ## Project Overview
 
-This data analysis project aims to study user trends from an existing fitness/health data collection device called FitBit. Then develope marketing recommendations for a new fitness tracker company to improve customer experience and unlock growth opportunities with their product.
+This data analysis project aims to study user trends from an existing fitness/health data collection device called FitBit. Then develope marketing recommendations for a new fitness tracker company to improve customer experience and unlock growth opportunities with their own fitness tracker.
 
 ### 📊 Data Source:
 - [Download FitBit Tracker Data From Kaggle!](https://www.kaggle.com/datasets/arashnic/fitbit) 
@@ -39,7 +39,8 @@ This data analysis project aims to study user trends from an existing fitness/he
 [**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about distance walked and calories burnt?    
 [**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?    
 [**Q6**](#Question-6) How many minutes are each user usually active every day?   
-### 🧹 Data Cleaning and Analysis in SQL
+
+### 🧹 Data Cleaning and Analysis in SQL and Tableau
 
 The data set "dailyActivity" has the same identical columns that "dailyCalories", "dailySteps", and "dailyIntensities" have except for one column named "SedentaryActiveDistance" inside "dailyintensities". I performed three **```JOIN```** Clauses to validate and match the data inside "dailyActivity" by Id and date with the other data sets.
 
@@ -377,17 +378,83 @@ calories burnt and distance travelled tells that the difference is minimal.
 
 #### [Question 5](#Exploratory-Questions)    
 ---
+🚶[Number of steps per day more important than step intensity    ](https://www.nih.gov/news-events/nih-research-matters/number-steps-day-more-important-step-intensity)     
+The CDC recommends to walk over 10,000 steps every day to live longer and be healthier
+
+Using 'Step daily', 1 user with only 4 days of walking data was excluded, then by using two subqueries, days of each user and the amount of days 
+where they walked more than 10,000 steps were counted, then calculated into a percentage. Those percentages were grouped into categories, the queries are as following:
+
+```sql
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.Step10k` AS
+SELECT
+  Id,
+  Percentage,
+CASE
+  WHEN Percentage BETWEEN 0 AND 30 THEN '0%-30%'
+  WHEN Percentage BETWEEN 31 AND 50 THEN '31%-50%'
+  WHEN Percentage BETWEEN 51 AND 70 THEN '51%-70%'
+  WHEN Percentage BETWEEN 71 AND 90 THEN '71%-90%'
+  WHEN Percentage >= 90 THEN '>90%'
+  END AS grouped
+FROM(
+  SELECT
+    Id,
+    (Step10k * 100)/alldays * 1.0 AS Percentage -- calculate percentage
+  FROM(
+    SELECT
+      Id,
+      COUNT(CASE WHEN StepTotal >= 10000 THEN 1 END) Step10k, -- count 1 when total steps are at least 10000
+      COUNT(*) AS alldays -- count total days
+      FROM(
+       SELECT
+          Id,
+          StepTotal
+        FROM
+          `fitbit-data-exploration.FitBit_Tracker.daily steps` a
+        WHERE(
+          SELECT COUNT(*)
+          FROM `fitbit-data-exploration.FitBit_Tracker.daily steps` b
+          WHERE b.Id = a.Id) >= 15 -- only include users that have at least 15 days of data
+      )
+    GROUP BY Id) -- grouped by Id so counted days and percentage calculations are within each Id
+derived)
+ORDER BY grouped ASC
+```
+
+![Q5 step10k pie chart](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q5%2010k_steps.png)
+*(Figure 5) N=32, pie chart of how many users walked over 10,000 steps a percentage of their tracked days; 62.5% of users walked over 10,000 steps 0-30% of their days, 9.38% of users walked
+over 10,000 steps 31-50% of their days, 9.38% of users walked over 10,000 steps 51-70% of their days, 15.63% of users walked over 10,000 steps 71-90% of their days, 3.13% or one user walked over 10,000 steps
+above 90% of their days.
+
+**Analysis**✏️ From this chart it looks like over 70% of people in this study did not meet the CDC's recommended 10,000 steps a day most of this month of study, with only one user walking over 10,000
+steps almost all of the month of study. some users had a couple of thousands of steps per day for a lot of days, and a couple of users also had zero or a couple hundred steps per day for a lot of days. Being in the 0-30% 
+cateogry does not directly mean they are unfit as days with 9000 steps and days with 0 steps are both not counted as the threshold was 10,000 to match CDC's recommendations.
 
 #### [Question 6](#Exploratory-Questions)    
+
 ---
+### 🗒️Results/Discussion 
 
-
-### Limitations:
+#### Limitations
 
 -  There are 33 users instead of the 30 users mentioned in the description of this dataset, loses some point on data integrity
 -  Potentially biased data, no information on demographic, gender, age, not sure if the population is fairly represented or not as the sample size is small.
 -  Data only contains 30 days of data, with some users having less data than that.
--  Sleep data set specifically have an even smaller sample size due to incomplete data, however still beneficial to include in analysis.
+-  Sleep data set specifically have an even smaller sample size due to incomplete data with some missing users data for the whole month.
 -  Assumed that most of the calories burnt comes from users walking/running instead of working out or other activities, data could be skewed as there are no heart rate data to reference when the user was active other than walking or running.
 -  Old dataset from 2016, outdated, not for current use but historical data reference only.
+-  Uncertainity of how intensity values were calculated, absence of heart rate data.
+-  Users could take off the fitbit at any time during any day, some users did not wear the fitbit to bed which caused missing data.
+-  The fitbit tracker had a few zero values for daily calories burnt. Those same days had other non-zero data collected, so zero calories burnt is not possible, which hints at tracker data collection malfunction. Data collection errors could have happened in other data categories unknown by analysts.
 
+
+#### Findings
+
+The data that this specific Fitbit tracker provided is not optimal, some categories are difficult to related to one another as there are many factors where the data could be skewed. The best relationship
+found was calories burnt and steps taken/distance travelled. Sleep data was very incomplete and anlysis was partial due to limited sample size and data reliability. Some data categories were not explained in detail
+how they were measured or collected, like intensity value, 'FairlyActiveMinutes', 'VeryActiveMinutes', 'ModeratelyActiveDistance', ... etc. This caused a lot of generalization of data that should have been specific for better analysis; lightly active minutes and very active minutes were combined and generalized into 'Active Minutes', fairly active distance and very active distance were combined and generalized into 'Active Distance'. However, with a few limitations, the daily and hourly calories and steps data were mostly reliable for fairly accurate analysis. Sleep time data although incomplete, was important data to study sleep time for users
+and to track their performance in other areas.
+
+#### Recommendations For New Fitness Tracker Company
+
+**1.** 
