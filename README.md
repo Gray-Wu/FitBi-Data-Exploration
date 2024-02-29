@@ -291,7 +291,11 @@ The following was created using Tableau 🔽
 ![Q3 pt.2 line graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q3%20pt.2%20line%20graph.png)    
 *(Figure 3c) Line graph of average hourly intensity in orange and average hourly calories burnt in blue.*
 
-**Analysis**✏️ 
+**Analysis**✏️ There is a fairly positive correlation between hourly calories burnt and hourly intensity. In Figure 3b, the beginning-middle of the trend line is more flat-lined as there are 
+users with similar average hourly calories burnt but very different average hourly intensity, this could be due to the tracker's measurement for intensity. Walking for a long time burns 
+a lot of calories however it is not very intense, as where sprinting for a couple minutes is very intense it does not burn as much calories as walking do. The uncertainity of how the fitbit calculates
+intensity makes the analysis more difficult. But for the beginning and later half of the trend line, the two measures are positively related. This says that intensity is not the most optimal way of 
+seeing how active someone may be.
 
 #### [Question 4](#Exploratory-Questions)   
 ---
@@ -362,8 +366,15 @@ ON
 WHERE
   dist.ActivityDate = step.ActivityDay AND dist.Calories = step.Calories;
 ```
-Tableau was used to create a visualization to put both tables in the same context🔽
-![Q4 Steps/Distance Vs Calories](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q4%20steps_distance_Vs_calories.png)
+Tableau was used to create a visualization to put both tables in the same context🔽    
+![Q4 Steps/Distance Vs Calories](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q4%20steps_distance_Vs_calories.png)      
+*(Figure 4) Two scatterplots with calories burnt as the y-axis, steps taken on the x-axis in the left plot, distance travelled in kilometers as the x-axis in the right plot.*
+
+**Analysis**✏️ Strong positive correlation between calories burnt and steps taken/distance travelled, a better measurement of how active someone is than using intensity levels.
+The more steps taken and further distance travelled on foot, the more calories burnt. Although very positive results, the data does not seperate steps taken between walking and running,
+this would skew the data if someone ran the same steps as someone walked because running would burn more calories if the steps were equal. However the strong positive correlation between
+calories burnt and distance travelled tells that the difference is minimal.
+
 #### [Question 5](#Exploratory-Questions)    
 ---
 
