@@ -120,11 +120,35 @@ Now all the data is ready to tackle the exploratory questions 🔽
 
 #### [Question 1](#Exploratory-Questions)
 ---
+With **```COUNT```** and **```DISTINCT```** I found that only 23 of the 33 users had sleep data.
 
-Using **```COUNT```** and **```DISTINCT```** I found that only 23 of the 33 users had sleep data.
+Using 'daily activity' and  'daily sleep', **```LEFT JOIN```** was utilized to match users Id with the same date of sleep and activity. 
+Only users with at least 15 days of sleep data were included.     
 
-I used **```LEFT JOIN```** with the average data table after useing a subquery to get users with more than or equal to 15 days of sleep data.
-*I chose 15 days to be linient with the sample filtering because the sample size was already small*
+
+```sql
+CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.Q1_Sleep_Active_Minutes` AS
+SELECT 
+  sleep.Id,
+  sleep.SleepDay AS Date,
+  sleep.TotalMinutesAsleep,
+  act.VeryActiveMinutes + act.FairlyActiveMinutes + 
+  act.LightlyActiveMinutes AS TotalActiveMinutes -- calculate total distance
+FROM
+  `fitbit-data-exploration.FitBit_Tracker.daily sleep 1` sleep
+LEFT JOIN
+  `fitbit-data-exploration.FitBit_Tracker.daily activity full` act
+ON sleep.Id = act.Id
+WHERE sleep.SleepDay = act.ActivityDate -- JOIN by Id and match date
+```
+After inserting the joined result into tableau 🔽
+
+![Q1 non-avg](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q1%20non_avg_sleep_vs_active_minutes.png)     
+*(Figure 1a) Sleep minutes plotted against activity minutes matched by date and user Id*       
+
+Repeated this process but found the average of each users' daily sleep and activity time in minutes. Only included users with 
+at least 15 days of data to minimized skewed average calculations from missing days.     
+*15 days was chosen to be the cutoff to be linient with the sample filtering as the sample size was already small*
 
 ```sql
 CREATE TABLE `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_Q1` AS
@@ -148,8 +172,12 @@ ON avg_sleep.Id = avg_all.Id
 ```
 After inputting into Tableau🔽
 
-![Q1 tableau graph]()
-*(Figure 1b)Line graph of each users' average daily sleep time shown in red against daily total active minutes shown in blue*
+![Q1 avg graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/Q1%20User%20Time%20Slept%20Vs%20User%20Active%20Minutes.png)        
+*(Figure 1b) Line graph of each users' average daily slept minutes shown in red and active minutes shown in blue*       
+
+**Analysis**✏️ From these visualizations, there is no correlation. There are many outliers and there is no clear direction, this may also be due to small sample size.
+From *Figure 1a* it seems like most users are sleeping between 300-550 minutes, however there is no correleation between that and their activity minutes in any direction.
+
 #### [Question 2](#Exploratory-Questions)
 ---
 
