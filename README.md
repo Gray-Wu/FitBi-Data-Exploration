@@ -146,10 +146,10 @@ FROM( -- subquery users' average sleep time if they have more than or equal to 1
 LEFT JOIN `fitbit-data-exploration.FitBit_Tracker_Export_Tables.avg_all` avg_all
 ON avg_sleep.Id = avg_all.Id
 ```
-Using Tableau this simple graph was created
+After inputting into Tableau🔽
 
-![Q1 tableau graph](https://github.com/Gray-Wu/FitBi-Data-Exploration/blob/main/tableau_visualizations/User%20Time%20Slept%20Vs%20User%20Active%20Minutes.png)
-
+![Q1 tableau graph]()
+*(Figure 1b)Line graph of each users' average daily sleep time shown in red against daily total active minutes shown in blue*
 #### [Question 2](#Exploratory-Questions)
 ---
 
