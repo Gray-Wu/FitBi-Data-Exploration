@@ -37,8 +37,7 @@ This data analysis project aims to study user trends from an existing fitness/he
 [**Q2**](#Question-2) What is the percentage of days where each user is getting at least 7 hours of sleep?    
 [**Q3**](#Question-3) Do users with a higher average hourly intensity rate tend to burn more average calories per hour?    
 [**Q4**](#Question-4) What is the correlation between steps taken and calories burnt? What about distance walked and calories burnt?    
-[**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?    
-[**Q6**](#Question-6) How many minutes are each user usually active every day?   
+[**Q5**](#Question-5) What percentage of users meet CDC's recommended daily steps?     
 
 ### 🧹 Data Cleaning and Analysis in SQL and Tableau
 
@@ -430,8 +429,6 @@ above 90% of their days.
 steps almost all of the month of study. some users had a couple of thousands of steps per day for a lot of days, and a couple of users also had zero or a couple hundred steps per day for a lot of days. Being in the 0-30% 
 cateogry does not directly mean they are unfit as days with 9000 steps and days with 0 steps are both not counted as the threshold was 10,000 to match CDC's recommendations.
 
-#### [Question 6](#Exploratory-Questions)    
-
 ---
 ### 🗒️Results/Discussion 
 
@@ -451,10 +448,15 @@ cateogry does not directly mean they are unfit as days with 9000 steps and days 
 #### Findings
 
 The data that this specific Fitbit tracker provided is not optimal, some categories are difficult to related to one another as there are many factors where the data could be skewed. The best relationship
-found was calories burnt and steps taken/distance travelled. Sleep data was very incomplete and anlysis was partial due to limited sample size and data reliability. Some data categories were not explained in detail
-how they were measured or collected, like intensity value, 'FairlyActiveMinutes', 'VeryActiveMinutes', 'ModeratelyActiveDistance', ... etc. This caused a lot of generalization of data that should have been specific for better analysis; lightly active minutes and very active minutes were combined and generalized into 'Active Minutes', fairly active distance and very active distance were combined and generalized into 'Active Distance'. However, with a few limitations, the daily and hourly calories and steps data were mostly reliable for fairly accurate analysis. Sleep time data although incomplete, was important data to study sleep time for users
+found was calories burnt and steps taken/distance travelled. Sleep data was very incomplete and anlysis was partial due to limited sample size and data reliability.     
+
+Some data categories were not explained in detail how they were measured or collected, like intensity value, 'FairlyActiveMinutes', 'VeryActiveMinutes', 'ModeratelyActiveDistance', ... etc. This caused a lot of generalization of data that should have been specific for better analysis; lightly active minutes and very active minutes were combined and generalized into 'Active Minutes', fairly active distance and very active distance were combined and generalized into 'Active Distance'. However, with a few limitations, the daily and hourly calories and steps data were mostly reliable for fairly accurate analysis. Sleep time data although incomplete, was important data to study sleep time for users
 and to track their performance in other areas.
 
 #### Recommendations For New Fitness Tracker Company
 
-**1.** 
+**1.** The users should be told to keep the fitbit on when they sleep to measure consistent and accurate sleep data during study period.    
+**2.** More users should be studied over a longer period of time for product testing, at least 3 months or more.       
+**3.** Show the tested users' age, demographic, and region to make sure the population can be closely represented.      
+**4.** Include more data categories like daily mood level, weight change, fitness goals, water intake, heart rate. Also the data categories should be more specific, use hourly heart rate to calculate “intensity level” for example.     
+
